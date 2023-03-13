@@ -19,6 +19,7 @@ def update_programs(programs: list[dict]) -> list[dict]:
         if updated == []: # Проверяем, получилось вытащить программу или нет
             print(programs[item])
             exit(f"Failed {item}") 
+        print(item)
         save_program_json(updated, filename=item)
         save_program_txt(programs[item], filename=item)
         result.append(updated)

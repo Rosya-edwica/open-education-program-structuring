@@ -48,6 +48,8 @@ def build_module_type(program: str) -> str:
     modules =  re.findall(module_pattern, program)
     module_lessons = re.split(module_pattern, program)
     for i, module in enumerate(modules):
+        if clear_tags(module) == "Курс будет состоять из четырех блоков:":
+            exit(program)
         result.append({
             "name": clear_tags(module),
             "lessons": []

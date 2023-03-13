@@ -3,7 +3,11 @@ from config import clear_tags
 from lessons_with_desc import build_lesson_with_desc_type
 
 
-lesson_pattern = r"<p>.*?<\/p>|<p>.*?<br>|.*?<brong>2. Предел и непреры>|.*?<\/p>|<li>.*?<\/li>"
+lesson_pattern = r"<p>.*?<\/p>|<p>.*?<br>|.*?<\/p>|<li>.*?<\/li>"
+regex_priorities = (
+    r"<li>.*?<\/li>",
+    r"<p>.*?<\/p>|<p>.*?<br>|.*?<\/p>"
+)
 
 
 def build_lesson_type(program: str) -> str:
@@ -43,7 +47,11 @@ def build_lesson_type(program: str) -> str:
     
     if "<strong>" in program: return build_lesson_with_desc_type(program)
     
-    finded = re.findall(lesson_pattern, program)
+    for pattern in regex_priorities:
+        finded = re.findall(pattern, program)
+        if finded:
+            break
+
     lessons: list[dict] = []
     for lesson in finded:
         lesson = clear_tags(lesson)
